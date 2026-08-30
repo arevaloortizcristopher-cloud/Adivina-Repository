@@ -41,18 +41,31 @@ CSS = f"""
 .stApp {{
     background-color: {PALETA['fondo']};
 }}
+/* Streamlit Cloud aplica texto blanco cuando detecta modo oscuro del
+   sistema operativo del usuario; como forzamos un fondo claro, hay que
+   forzar también el color de TODO el texto para que no quede invisible. */
+.stApp, .stApp p, .stApp li, .stApp label, .stApp span,
+[data-testid="stMarkdownContainer"], [data-testid="stMarkdownContainer"] p,
+[data-testid="stCaptionContainer"], [data-testid="stCaptionContainer"] p,
+[data-testid="stHeader"], .stApp h1, .stApp h2, .stApp h3 {{
+    color: {PALETA['texto']} !important;
+}}
 div.stButton > button {{
     border-radius: 999px;
     border: none;
     padding: 0.6em 1.4em;
     font-weight: 600;
     background: linear-gradient(90deg, {PALETA['rosa']}, {PALETA['amarillo']});
-    color: {PALETA['texto']};
+    color: {PALETA['texto']} !important;
+}}
+div.stButton > button p {{
+    color: {PALETA['texto']} !important;
 }}
 .ghostie-title {{
     text-align: center;
     font-size: 2.2em;
     font-weight: 800;
+    color: {PALETA['texto']} !important;
 }}
 .materia-chip {{
     display: inline-block;
@@ -60,10 +73,24 @@ div.stButton > button {{
     border-radius: 999px;
     margin: 0.2em;
     font-weight: 600;
+    color: {PALETA['texto']} !important;
+}}
+.rainbow-bar {{
+    height: 8px;
+    border-radius: 999px;
+    margin: 4px 0 22px 0;
+    background: linear-gradient(90deg,
+        {PALETA['rosa']}, {PALETA['naranja']}, {PALETA['amarillo']},
+        {PALETA['verde']}, {PALETA['azul']}, {PALETA['morado']});
 }}
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
+
+
+def barra_arcoiris():
+    """Franja decorativa arcoíris, como en la maqueta de la interfaz."""
+    st.markdown('<div class="rainbow-bar"></div>', unsafe_allow_html=True)
 
 COLOR_MATERIA = {
     "Ciencias": PALETA["verde"],
@@ -98,6 +125,7 @@ def usuario_actual():
 # 1. PÁGINA PRINCIPAL (INICIO)
 # ----------------------------------------------------------------------
 def pagina_inicio():
+    barra_arcoiris()
     st.markdown('<div class="ghostie-title">👻 Adivina_Estudio</div>', unsafe_allow_html=True)
     st.caption("IA con enfoque pedagógico — piensa, no dependas.")
     st.write(
@@ -117,6 +145,7 @@ def pagina_inicio():
 # 2. REGISTRO / INICIO DE SESIÓN
 # ----------------------------------------------------------------------
 def pagina_login():
+    barra_arcoiris()
     st.header("Inicia sesión")
     st.caption("Utiliza tu usuario para poder ingresar.")
     with st.form("form_login"):
@@ -137,6 +166,7 @@ def pagina_login():
 
 
 def pagina_registro():
+    barra_arcoiris()
     st.header("Regístrate")
     st.caption("¡Únete a esta comunidad!")
     with st.form("form_registro"):
